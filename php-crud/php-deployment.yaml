@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: docker.io/pasqualesalza/php-crud:latest
+        image: docker.io/mevdschee/php-crud-api
         ports:
         - containerPort: 80
         env:
