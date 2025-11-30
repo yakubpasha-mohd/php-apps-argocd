@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-crud
+  namespace: php-crud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-crud
+  template:
+    metadata:
+      labels:
+        app: php-crud
+    spec:
+      containers:
+      - name: app
+        image: docker.io/ziqq/php-crud-app:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          value: "mysql.php-crud.svc.cluster.local"
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_PASSWORD
